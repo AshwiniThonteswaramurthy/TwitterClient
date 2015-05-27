@@ -1,6 +1,7 @@
 package com.codepath.apps.twitterclient.helpers;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -8,6 +9,8 @@ import com.loopj.android.http.RequestParams;
 
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
+
+import java.util.List;
 
 /*
  * 
@@ -35,19 +38,27 @@ public class TwitterClient extends OAuthBaseClient {
     public void getHomeTimeline(Long maxId, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
-        params.put("count", 25);
         if(maxId != null)
         {
+            Log.d("DEBUG MAX ID:" , maxId +" maxID");
             params.put("max_id", maxId);
         }
         client.get(apiUrl, params, handler);
     }
 
-    public void postTweet(String body, AsyncHttpResponseHandler handler)
+    public void postTweet(String body, String inReplyToStatusId,List<String> mediaId, AsyncHttpResponseHandler handler)
     {
         String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
         params.put("status", body);
+        if(inReplyToStatusId != null && !inReplyToStatusId.isEmpty())
+        {
+            params.put("in_reply_to_status_id", inReplyToStatusId);
+        }
+        if(mediaId != null && !mediaId.isEmpty())
+        {
+            params.put("media_ids", mediaId);
+        }
         client.post(apiUrl, params, handler);
 
     }
@@ -57,7 +68,46 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("account/verify_credentials.json");
         RequestParams params = new RequestParams();
         params.put("skip_status", String.valueOf(true));
-        client.get(apiUrl,params,handler);
+        client.get(apiUrl, params, handler);
+    }
+    public void makeFavorite(long statusId, AsyncHttpResponseHandler handler)
+    {
+        String apiUrl = "https://api.twitter.com/1.1/favorites/create.json";
+        RequestParams params = new RequestParams();
+        params.put("id", String.valueOf(statusId));
+        client.post(apiUrl, params, handler);
+    }
+
+    public void unFavorite(long statusId, AsyncHttpResponseHandler handler)
+    {
+        String apiUrl = "https://api.twitter.com/1.1/favorites/destroy.json";
+        RequestParams params = new RequestParams();
+        params.put("id", String.valueOf(statusId));
+        client.post(apiUrl, params, handler);
+    }
+
+    public void getUsersFavoritesList(AsyncHttpResponseHandler handler)
+    {
+        String apiUrl = getApiUrl("favorites/list.json");
+        client.get(apiUrl, null, handler);
+    }
+
+    public void retweet(String tweetId, AsyncHttpResponseHandler handler)
+    {
+        String url = "https://api.twitter.com/1.1/statuses/retweet/"+tweetId+".json";
+        RequestParams params = new RequestParams();
+        params.add("id", tweetId);
+        client.post(url, params, handler);
+    }
+
+    //TODO camera wait until the picture is taken and then upload media
+    public void uploadMedia(String fileUrl, AsyncHttpResponseHandler handler)
+    {
+        String url = "https://upload.twitter.com/1.1/media/upload.json";
+        RequestParams params = new RequestParams();
+        params.put("file", fileUrl);
+        params.put("file-field", "media");
+        client.post(url, params, handler);
     }
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

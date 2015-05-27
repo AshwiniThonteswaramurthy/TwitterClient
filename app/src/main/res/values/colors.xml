@@ -4,4 +4,5 @@
     <color name="twitter_white">#ffffff</color>
     <color name="twitter_greyed_out">#E1F5FE</color>
     <color name="twitter_text_color">#696969</color>
+    <color name="twitter_view_seperator">#B0BEC5</color>
 </resources>

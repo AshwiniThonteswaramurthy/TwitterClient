@@ -3,19 +3,31 @@ package com.codepath.apps.twitterclient.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONObject;
 
-public class User implements Parcelable {
+import java.util.List;
+
+@Table(name="user")
+public class User extends Model implements Parcelable {
+
+    @Column(name="name")
     private String name;
-    private long id;
+    @Column(name="uid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    private long uid;
+    @Column(name="screenName")
     private String screenName;
+    @Column(name="profileImageUrl")
     private String profileImageUrl;
 
     public static User fromJson(JSONObject jsonObject)
     {
         User user = new User();
         user.name = jsonObject.optString("name");
-        user.id = jsonObject.optLong("id");
+        user.uid = jsonObject.optLong("id");
         user.screenName = jsonObject.optString("screen_name");
         user.profileImageUrl = jsonObject.optString("profile_image_url");
         return user;
@@ -25,8 +37,8 @@ public class User implements Parcelable {
         return name;
     }
 
-    public long getId() {
-        return id;
+    public long getUid() {
+        return uid;
     }
 
     public String getScreenName() {
@@ -45,7 +57,7 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeLong(this.id);
+        dest.writeLong(this.uid);
         dest.writeString(this.screenName);
         dest.writeString(this.profileImageUrl);
     }
@@ -55,7 +67,7 @@ public class User implements Parcelable {
 
     private User(Parcel in) {
         this.name = in.readString();
-        this.id = in.readLong();
+        this.uid = in.readLong();
         this.screenName = in.readString();
         this.profileImageUrl = in.readString();
     }
@@ -74,9 +86,13 @@ public class User implements Parcelable {
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", id=" + id +
+                ", id=" + uid +
                 ", screenName='" + screenName + '\'' +
                 ", profileImageUrl='" + profileImageUrl + '\'' +
                 '}';
+    }
+
+    public List<Tweet> items() {
+        return getMany(Tweet.class, "User");
     }
 }

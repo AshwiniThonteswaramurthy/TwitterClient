@@ -78,4 +78,5 @@
         android:gravity="top"
         android:hint="What's happening?"
         android:background="#ffffff"/>
+
 </RelativeLayout>

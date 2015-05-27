@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.apps.twitterclient.R;
 import com.codepath.apps.twitterclient.helpers.TwitterClient;
@@ -46,9 +45,5 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// This should be tied to a button used to login
 	public void loginToRest(View view) {
 		getClient().connect();
-	}
-
-	public void composeTweet(View view) {
-		Toast.makeText(this,"login activity",Toast.LENGTH_LONG).show();
 	}
 }

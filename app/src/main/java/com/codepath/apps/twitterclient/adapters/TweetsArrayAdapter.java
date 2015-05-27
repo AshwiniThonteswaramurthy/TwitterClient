@@ -22,6 +22,16 @@ import java.util.List;
 
 public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
+    public static class ViewHolder {
+        ImageView ivProfileImage;
+        TextView tvUserName;
+        TextView tvBody;
+        TextView tvScreenName;
+        TextView tvCreatedAt;
+        TextView tvRetweetCount;
+        TextView tvFavoriteCount;
+    }
+
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
         super(context, R.layout.item_tweet, tweets);
     }
@@ -29,36 +39,34 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Tweet tweet = getItem(position);
-        if (convertView == null)
-        {
+
+        ViewHolder viewHolder;
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
+            viewHolder.ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
+            viewHolder.tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
+            viewHolder.tvBody = (TextView) convertView.findViewById(R.id.tvBody);
+            viewHolder.tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
+            viewHolder.tvCreatedAt = (TextView) convertView.findViewById(R.id.tvCreatedAT);
+            viewHolder.tvRetweetCount = (TextView) convertView.findViewById(R.id.tvRetweetCount);
+            viewHolder.tvFavoriteCount = (TextView) convertView.findViewById(R.id.tvFavoriteCount);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
-        TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
-        TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
-        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
-        TextView tvCreatedAt = (TextView) convertView.findViewById(R.id.tvCreatedAT);
-        TextView tvFavoriteCount = (TextView) convertView.findViewById(R.id.tvFavoriteCount);
-        final ImageView ivFavoriteImage = (ImageView) convertView.findViewById(R.id.ivFavoriteImage);
-        ivFavoriteImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ivFavoriteImage.setImageResource();
-                //TODO on click save the favorites
-            }
-        });
 
-        tvUserName.setText(tweet.getUser().getScreenName());
-        tvBody.setText(tweet.getBody());
-        tvScreenName.setText("@"+tweet.getUser().getScreenName());
+        viewHolder.tvUserName.setText(tweet.getUser().getName());
+        viewHolder.tvBody.setText(tweet.getBody());
+        viewHolder.tvScreenName.setText("@" + tweet.getUser().getScreenName());
+        if(tweet.getRetweetCount() >0) {
+            viewHolder.tvRetweetCount.setText(String.valueOf(tweet.getRetweetCount()));
+        }
+        if(tweet.getFavoriteCount() > 0) {
+            viewHolder.tvFavoriteCount.setText(String.valueOf(tweet.getFavoriteCount()));
+        }
+        viewHolder.tvCreatedAt.setText(DateHelper.getTimeString(new Date(tweet.getCreatedAt())));
 
-        tvFavoriteCount.setText(String.valueOf(tweet.getFavoriteCount()));
-
-        //TODO seperate images next to text based on type links, photo, video etc
-        tvCreatedAt.setText(DateHelper.getTimeString(new Date(tweet.getCreatedAt())));
-
-        ivProfileImage.setImageResource(android.R.color.transparent);
-
+        viewHolder.ivProfileImage.setImageResource(android.R.color.transparent);
         Transformation transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.WHITE)
                 .borderWidthDp(3)
@@ -66,12 +74,11 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
                 .oval(false)
                 .build();
 
-        //TODO viewholder pattern
         Picasso.with(getContext())
                 .load(tweet.getUser().getProfileImageUrl())
                 .fit()
                 .transform(transformation)
-                .into(ivProfileImage);
+                .into(viewHolder.ivProfileImage);
 
         return convertView;
     }
