@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivProfileViewHeaderImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivProfileViewProfileImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tvProfileViewUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfileViewProfileImage"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textColor="@color/twitter_white"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvProfileViewScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileViewUserName"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/twitter_white"
+        android:textSize="11sp" />
+
+    <Button
+        android:layout_height="5dp"
+        android:layout_width="5dp"
+        android:id="@+id/btnSelected"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/iconmonstr_circle_white_filled"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:layout_height="5dp"
+        android:layout_width="5dp"
+        android:id="@+id/btnUnSelected"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/iconmonstr_circle_grey_filled"
+        android:layout_alignTop="@id/btnSelected"
+        android:layout_alignBottom="@id/btnSelected"
+        android:layout_toRightOf="@id/btnSelected"
+        android:layout_toEndOf="@id/btnSelected" />
+
+</RelativeLayout>

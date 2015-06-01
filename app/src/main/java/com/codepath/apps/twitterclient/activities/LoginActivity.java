@@ -29,7 +29,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// i.e Display application "homepage"
 	@Override
 	public void onLoginSuccess() {
-		 Intent i = new Intent(this, HomeTimelineActivity.class);
+		 Intent i = new Intent(this, MainActivity.class);
 		 startActivity(i);
 	}
 
@@ -46,4 +46,14 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	public void loginToRest(View view) {
 		getClient().connect();
 	}
+
+//	public void doSomeAnimation() {
+//		View animatedView = findViewById(R.id.animatedView);
+//		TranslateAnimation animation = new TranslateAnimation(
+//				Animation.ABSOLUTE, -10,
+//				Animation.ABSOLUTE, -10,
+//				Animation.RELATIVE_TO_SELF, 0.5,
+//				Animation.RELATIVE_TO_PARENT, 0.8);
+//		animatedView.startAnimation(animation);
+//	}
 }

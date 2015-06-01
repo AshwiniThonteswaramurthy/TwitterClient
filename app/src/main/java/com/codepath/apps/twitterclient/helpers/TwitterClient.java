@@ -1,8 +1,8 @@
 package com.codepath.apps.twitterclient.helpers;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.codepath.apps.twitterclient.models.User;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -25,11 +25,11 @@ import java.util.List;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
-    public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
-    public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
+    public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class;
+    public static final String REST_URL = "https://api.twitter.com/1.1/";
     public static final String REST_CONSUMER_KEY = "CdzFMj4J6ExodY7Z2vESnL0Hg";
     public static final String REST_CONSUMER_SECRET = "xnRVcY4n8ZUvE3pBI4Bl2iKRprWqTaFk0oVABKVyPM5Rv1mP7U";
-    public static final String REST_CALLBACK_URL = "oauth://cptwitterclient"; // Change this (here and in manifest)
+    public static final String REST_CALLBACK_URL = "oauth://cptwitterclient";
 
     public TwitterClient(Context context) {
         super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
@@ -38,14 +38,49 @@ public class TwitterClient extends OAuthBaseClient {
     public void getHomeTimeline(Long maxId, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
-        if(maxId != null)
+        if(maxId != 0l)
         {
-            Log.d("DEBUG MAX ID:" , maxId +" maxID");
             params.put("max_id", maxId);
         }
         client.get(apiUrl, params, handler);
     }
 
+    public void getMentionsTimeline(Long maxId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        RequestParams params = new RequestParams();
+        if(maxId != 0l)
+        {
+            params.put("max_id", maxId);
+        }
+        client.get(apiUrl, params, handler);
+    }
+
+    public void getUserTimeline(String screenName, Long maxId, AsyncHttpResponseHandler handler)
+    {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        RequestParams params = new RequestParams();
+        if(screenName != null || !screenName.isEmpty())
+        {
+            params.put("screen_name", screenName);
+        }
+        if(maxId != 0l)
+        {
+            params.put("max_id", maxId);
+        }
+        client.get(apiUrl, params, handler);
+    }
+
+    public void searchTweets(String query,long maxId, AsyncHttpResponseHandler handler)
+    {
+        String apiUrl = getApiUrl("search/tweets.json");
+        RequestParams params = new RequestParams();
+        params.add("q", query);
+        if(maxId != 0l)
+        {
+            params.put("max_id", maxId);
+        }
+        client.get(apiUrl,params,handler);
+    }
     public void postTweet(String body, String inReplyToStatusId,List<String> mediaId, AsyncHttpResponseHandler handler)
     {
         String apiUrl = getApiUrl("statuses/update.json");
@@ -63,6 +98,15 @@ public class TwitterClient extends OAuthBaseClient {
 
     }
 
+    public void postDirectMessage(String body, String toSreenName, AsyncHttpResponseHandler handler)
+    {
+        String url = getApiUrl("direct_messages/new.json");
+        RequestParams params = new RequestParams();
+        params.add("screen_name", toSreenName);
+        params.add("text", body);
+        client.post(url,params,handler);
+    }
+
     public void getLoggedInUserDetails(AsyncHttpResponseHandler handler)
     {
         String apiUrl = getApiUrl("account/verify_credentials.json");
@@ -70,9 +114,10 @@ public class TwitterClient extends OAuthBaseClient {
         params.put("skip_status", String.valueOf(true));
         client.get(apiUrl, params, handler);
     }
+
     public void makeFavorite(long statusId, AsyncHttpResponseHandler handler)
     {
-        String apiUrl = "https://api.twitter.com/1.1/favorites/create.json";
+        String apiUrl = getApiUrl("favorites/create.json");
         RequestParams params = new RequestParams();
         params.put("id", String.valueOf(statusId));
         client.post(apiUrl, params, handler);
@@ -80,7 +125,7 @@ public class TwitterClient extends OAuthBaseClient {
 
     public void unFavorite(long statusId, AsyncHttpResponseHandler handler)
     {
-        String apiUrl = "https://api.twitter.com/1.1/favorites/destroy.json";
+        String apiUrl = getApiUrl("favorites/destroy.json");
         RequestParams params = new RequestParams();
         params.put("id", String.valueOf(statusId));
         client.post(apiUrl, params, handler);
@@ -94,21 +139,37 @@ public class TwitterClient extends OAuthBaseClient {
 
     public void retweet(String tweetId, AsyncHttpResponseHandler handler)
     {
-        String url = "https://api.twitter.com/1.1/statuses/retweet/"+tweetId+".json";
+        String url = getApiUrl("statuses/retweet/"+tweetId+".json");
         RequestParams params = new RequestParams();
         params.add("id", tweetId);
         client.post(url, params, handler);
     }
 
-    //TODO camera wait until the picture is taken and then upload media
-    public void uploadMedia(String fileUrl, AsyncHttpResponseHandler handler)
+    public void getUsersInformation(User user, AsyncHttpResponseHandler handler)
     {
-        String url = "https://upload.twitter.com/1.1/media/upload.json";
+        String url = getApiUrl("users/show.json");
         RequestParams params = new RequestParams();
-        params.put("file", fileUrl);
-        params.put("file-field", "media");
-        client.post(url, params, handler);
+        params.add("user_id", String.valueOf(user.getUid()));
+        params.add("screen_name", String.valueOf(user.getScreenName()));
+        client.get(url, params, handler);
     }
+
+    public void getAllFollowers(User user, AsyncHttpResponseHandler handler)
+    {
+        String url = getApiUrl("followers/list.json");
+        RequestParams params = new RequestParams();
+        params.add("screen_name", user.getScreenName());
+        client.get(url, params, handler);
+    }
+
+    public void getAllFriends(User user, AsyncHttpResponseHandler handler)
+    {
+        String url = getApiUrl("friends/list.json");
+        RequestParams params = new RequestParams();
+        params.add("screen_name", user.getScreenName());
+        client.get(url, params, handler);
+    }
+
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
      * 	  i.e getApiUrl("statuses/home_timeline.json");

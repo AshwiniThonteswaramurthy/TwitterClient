@@ -4,7 +4,20 @@
     <item
         android:id="@+id/miCompose"
         android:icon="@drawable/ic_compose"
-        app:showAsAction="ifRoom"
-        android:title="Compose">
+        app:showAsAction="always"
+        android:title="@string/compose_label">
+    </item>
+    <item
+        android:id="@+id/miProfile"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="always"
+        android:title="@string/profile_label">
+    </item>
+    <item
+        android:id="@+id/miSearch"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        android:title="@string/search_label"
+        app:actionViewClass="android.support.v7.widget.SearchView">
     </item>
 </menu>

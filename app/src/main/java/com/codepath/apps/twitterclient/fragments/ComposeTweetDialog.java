@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.twitterclient.R;
-import com.codepath.apps.twitterclient.helpers.TweetOfflineHelper;
 import com.codepath.apps.twitterclient.helpers.TweetTextWatcher;
 import com.codepath.apps.twitterclient.helpers.TwitterClient;
 import com.codepath.apps.twitterclient.models.Tweet;
@@ -46,7 +45,6 @@ public class ComposeTweetDialog extends DialogFragment {
     private Button btnTweet;
     private TextView tvTweetWordCount;
     private TwitterClient client;
-    private TweetOfflineHelper helper;
     private ArrayList mediaIds;
 
     public final String APP_TAG = "MyTwitterApp";
@@ -72,7 +70,6 @@ public class ComposeTweetDialog extends DialogFragment {
         mediaIds = new ArrayList();
         User currentlyLoggedinUser = (User) getArguments().get("user");
         final Tweet tweet = (Tweet) getArguments().get("tweet");
-        helper = new TweetOfflineHelper();
         ivComposeTweetClose = (ImageView) view.findViewById(R.id.ivComposeTweetClose);
         ivComposeProfileImage = (ImageView) view.findViewById(R.id.ivComposeProfileImage);
         tvComposeUserName = (TextView) view.findViewById(R.id.tvComposeUserName);

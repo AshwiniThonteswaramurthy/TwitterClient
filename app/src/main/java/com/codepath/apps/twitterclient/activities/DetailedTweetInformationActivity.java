@@ -1,6 +1,7 @@
 package com.codepath.apps.twitterclient.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -61,7 +62,7 @@ public class DetailedTweetInformationActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         client = TwitterApplication.getRestClient();
-        utils = new TwitterUtils(client, getFragmentManager());
+        utils = new TwitterUtils(client, this);
 
         ivDetailedViewProfileImage = (ImageView) findViewById(R.id.ivDetailedViewProfileImage);
         tvDetailedViewUserName = (TextView) findViewById(R.id.tvDetailedViewUserName);
@@ -95,6 +96,18 @@ public class DetailedTweetInformationActivity extends ActionBarActivity {
                     .fit()
                     .transform(transformation)
                     .into(ivDetailedViewProfileImage);
+
+            ivDetailedViewProfileImage.setClickable(true);
+            ivDetailedViewProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(DetailedTweetInformationActivity.this, ProfileActivity.class);
+                    Bundle data = new Bundle();
+                    data.putParcelable("user", tweet.getUser());
+                    intent.putExtras(data);
+                    startActivity(intent);
+                }
+            });
 
             tvDetailedViewUserName.setText(tweet.getUser().getName());
             tvDetailedViewScreenName.setText("@" + tweet.getUser().getScreenName());

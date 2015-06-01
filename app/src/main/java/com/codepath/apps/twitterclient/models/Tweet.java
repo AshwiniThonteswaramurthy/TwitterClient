@@ -14,24 +14,24 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name="tweets")
+@Table(name = "tweets")
 public class Tweet extends Model implements Parcelable {
 
-    @Column(name="body")
+    @Column(name = "body")
     private String body;
-    @Column(name="tid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    @Column(name = "tid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private long tid;
     @Column(name = "user", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private User user;
-    @Column(name="createdAt")
+    @Column(name = "createdAt")
     private String createdAt;
-    @Column(name="retweetCount")
+    @Column(name = "retweetCount")
     private int retweetCount = 0;
-    @Column(name="favoriteCount")
+    @Column(name = "favoriteCount")
     public int favoriteCount = 0;
-    @Column(name="mediaType")
+    @Column(name = "mediaType")
     private String mediaType;
-    @Column(name="mediaDisplayUrl")
+    @Column(name = "mediaDisplayUrl")
     private String mediaDisplayUrl;
 
     public static Tweet fromJson(JSONObject jsonObject) {
@@ -58,6 +58,7 @@ public class Tweet extends Model implements Parcelable {
         }
         return tweet;
     }
+
 
     public static ArrayList<Tweet> fromJsonArray(JSONArray jsonArray) {
         ArrayList<Tweet> tweets = new ArrayList<>();

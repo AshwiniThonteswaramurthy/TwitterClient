@@ -1,8 +1,11 @@
 package com.codepath.apps.twitterclient.adapters;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.twitterclient.R;
+import com.codepath.apps.twitterclient.activities.ProfileActivity;
 import com.codepath.apps.twitterclient.helpers.DateHelper;
 import com.codepath.apps.twitterclient.models.Tweet;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -38,7 +42,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
 
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -51,6 +55,8 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
             viewHolder.tvCreatedAt = (TextView) convertView.findViewById(R.id.tvCreatedAT);
             viewHolder.tvRetweetCount = (TextView) convertView.findViewById(R.id.tvRetweetCount);
             viewHolder.tvFavoriteCount = (TextView) convertView.findViewById(R.id.tvFavoriteCount);
+            convertView.setTag(viewHolder);
+
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
@@ -79,6 +85,17 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
                 .fit()
                 .transform(transformation)
                 .into(viewHolder.ivProfileImage);
+
+        viewHolder.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                Bundle data = new Bundle();
+                data.putParcelable("user", tweet.getUser());
+                intent.putExtras(data);
+                ((Activity)getContext()).startActivityForResult(intent, 143);
+            }
+        });
 
         return convertView;
     }
