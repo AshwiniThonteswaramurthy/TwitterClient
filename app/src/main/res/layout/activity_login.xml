@@ -2,24 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/twitter_blue"
+    android:gravity="center"
     tools:context=".LoginActivity" >
-
-    <Button
-        android:layout_width="match_parent"
-        android:id="@+id/btnConnect"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:onClick="loginToRest"
-        android:text="@string/connect_with_twitter_label" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/animatedView"
         android:layout_centerInParent="true"
-        android:layout_alignLeft="@id/btnConnect"
-        android:layout_alignRight="@id/btnConnect"
-        android:src="@drawable/twitter_splash_screen"/>
+        android:clickable="true"
+        android:src="@drawable/iconmonstr_twitter_splash_screen"/>
 
 </RelativeLayout>
