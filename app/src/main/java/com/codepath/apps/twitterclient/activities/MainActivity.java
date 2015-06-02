@@ -50,6 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //TODO work on dm
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
         MenuItem item = menu.findItem(R.id.miSearch);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
@@ -67,6 +68,7 @@ public class MainActivity extends ActionBarActivity {
                 return false;
             }
         });
+
         return true;
     }
 

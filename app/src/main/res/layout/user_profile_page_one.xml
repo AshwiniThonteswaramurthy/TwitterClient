@@ -61,5 +61,10 @@
         android:layout_alignBottom="@id/btnSelected"
         android:layout_toRightOf="@id/btnSelected"
         android:layout_toEndOf="@id/btnSelected" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbLoading"
+        android:visibility="invisible" />
 
 </RelativeLayout>

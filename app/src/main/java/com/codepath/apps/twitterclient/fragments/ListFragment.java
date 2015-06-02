@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.codepath.apps.twitterclient.R;
 import com.codepath.apps.twitterclient.activities.DetailedTweetInformationActivity;
@@ -56,6 +55,7 @@ public class ListFragment extends Fragment implements TweetResultsCallBack {
     }
 
     private void refresh() {
+
         lvTweets.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 
             @Override
@@ -100,7 +100,6 @@ public class ListFragment extends Fragment implements TweetResultsCallBack {
                 if (NetworkHelper.isNetworkAvailable((ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                     customLoadMoreDataFromApi(totalItemsCount);
                 } else {
-                    Toast.makeText(getActivity(), "loading tweets offline...", Toast.LENGTH_LONG).show();
                     offlineHelper.loadTweetsOfflineMode();
                 }
             }

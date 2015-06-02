@@ -14,8 +14,8 @@ import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> implements Animation.AnimationListener {
 
-    private Animation zoomin;
     private ImageView animatedView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,23 +30,23 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> im
         animatedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //login
                 getClient().connect();
             }
         });
-
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        if(hasFocus){
-            zoomin = AnimationUtils.loadAnimation(this,R.anim.rotate);
+        if (hasFocus) {
+            Animation zoomin = AnimationUtils.loadAnimation(this, R.anim.rotate);
             zoomin.setAnimationListener(this);
             zoomin.setRepeatCount(Animation.INFINITE);
             animatedView.startAnimation(zoomin);
         }
     }
+
+
 
     // Inflate the menu; this adds items to the action bar if it is present.
     @Override
@@ -68,14 +68,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> im
     @Override
     public void onLoginFailure(Exception e) {
         e.printStackTrace();
-    }
-
-    // Click handler method for the button used to start OAuth flow
-    // Uses the client to initiate OAuth authorization
-    // This should be tied to a button used to login
-    public void loginToRest(View view) {
-        animatedView.startAnimation(zoomin);
-        getClient().connect();
     }
 
     @Override

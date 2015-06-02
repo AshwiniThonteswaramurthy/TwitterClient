@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.apps.twitterclient.R;
 import com.codepath.apps.twitterclient.models.User;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -44,6 +46,7 @@ public class ProfileHeaderPageOneFragment extends Fragment {
         TextView tvProfileViewUserName = (TextView) view.findViewById(R.id.tvProfileViewUserName);
         TextView tvProfileViewScreenName = (TextView) view.findViewById(R.id.tvProfileViewScreenName);
         ImageView ivHeaderPic = (ImageView) view.findViewById(R.id.ivProfileViewHeaderImage);
+        final ProgressBar pbLoading = (ProgressBar) view.findViewById(R.id.pbLoading);
 
         if (user.getHeaderUrl() != null) {
             Picasso.with(getActivity())
@@ -61,7 +64,19 @@ public class ProfileHeaderPageOneFragment extends Fragment {
                 .load(user.getProfileImageUrl())
                 .fit()
                 .transform(transformation)
-                .into(ivProfilePic);
+                .into(ivProfilePic, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        //set it back to invisible
+                        pbLoading.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        //progressbar set visibility
+                        pbLoading.setVisibility(View.VISIBLE);
+                    }
+                });
 
         tvProfileViewUserName.setText(user.getName());
         tvProfileViewScreenName.setText("@" + user.getScreenName());

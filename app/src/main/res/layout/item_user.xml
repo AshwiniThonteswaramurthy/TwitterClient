@@ -50,4 +50,16 @@
         android:layout_below="@+id/tvScreenName"
         android:layout_toRightOf="@+id/ivUserProfilePic"
         android:layout_toEndOf="@+id/ivUserProfilePic"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/ivIndicationImage"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvUserName"
+        android:layout_toEndOf="@+id/tvUserName"
+        android:layout_alignTop="@+id/tvUserName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
 </RelativeLayout>

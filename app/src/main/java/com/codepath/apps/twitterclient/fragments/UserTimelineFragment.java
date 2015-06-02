@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codepath.apps.twitterclient.helpers.TweetOfflineHelper;
 import com.codepath.apps.twitterclient.models.User;
 
 public class UserTimelineFragment extends ListFragment {
@@ -38,10 +39,10 @@ public class UserTimelineFragment extends ListFragment {
 
     public void customLoadMoreDataFromApi(int offset) {
         if (!adapter.isEmpty()) {
-            offlineHelper.populateUserTimeline(user.getScreenName(), adapter.getItem(adapter.getCount() - 1).getTid());
+            offlineHelper.populateTimeline(user.getScreenName(), adapter.getItem(adapter.getCount() - 1).getTid(), TweetOfflineHelper.TweetType.USER);
         } else {
             adapter.clear();
-            offlineHelper.populateUserTimeline(user.getScreenName(), 0l);
+            offlineHelper.populateTimeline(user.getScreenName(), 0l, TweetOfflineHelper.TweetType.USER);
             adapter.notifyDataSetChanged();
         }
     }

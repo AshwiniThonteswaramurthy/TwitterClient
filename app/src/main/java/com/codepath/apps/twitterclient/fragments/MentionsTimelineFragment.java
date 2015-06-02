@@ -31,13 +31,10 @@ public class MentionsTimelineFragment extends ListFragment {
     }
 
     public void customLoadMoreDataFromApi(int offset) {
-        if (offset == 0) {
-            adapter.clear();
-            adapter.notifyDataSetChanged();
-            offlineHelper.populateTimeline(0l, TweetOfflineHelper.TweetType.MENTIONS);
-        }
         if (!adapter.isEmpty()) {
-            offlineHelper.populateTimeline(adapter.getItem(adapter.getCount() - 1).getTid(), TweetOfflineHelper.TweetType.MENTIONS);
+            offlineHelper.populateTimeline(null, adapter.getItem(adapter.getCount() - 1).getTid(), TweetOfflineHelper.TweetType.MENTIONS);
+        } else {
+            offlineHelper.populateTimeline(null, 0l, TweetOfflineHelper.TweetType.MENTIONS);
         }
 
     }

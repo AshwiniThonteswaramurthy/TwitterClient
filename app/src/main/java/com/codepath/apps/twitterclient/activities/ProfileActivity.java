@@ -20,7 +20,6 @@ import com.codepath.apps.twitterclient.models.User;
 public class ProfileActivity extends ActionBarActivity {
 
     private UserTimelineFragment userFragment;
-    private FragmentTransaction transaction;
     private ViewPager vpProfileView;
 
     @Override
@@ -119,7 +118,7 @@ public class ProfileActivity extends ActionBarActivity {
         if (userFragment == null) {
             userFragment = UserTimelineFragment.newInstance(user);
         }
-        transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.flTimeline, userFragment);
         transaction.commit();
     }

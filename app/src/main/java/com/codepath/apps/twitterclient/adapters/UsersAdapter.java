@@ -24,6 +24,7 @@ public class UsersAdapter extends ArrayAdapter<User>{
         TextView tvUserName;
         TextView tvDescription;
         TextView tvScreenName;
+        ImageView ivIndicationImage;
     }
 
     public UsersAdapter(Context context, List<User> users) {
@@ -43,6 +44,7 @@ public class UsersAdapter extends ArrayAdapter<User>{
             viewHolder.tvUserName= (TextView) convertView.findViewById(R.id.tvUserName);
             viewHolder.tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
             viewHolder.tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+            viewHolder.ivIndicationImage = (ImageView) convertView.findViewById(R.id.ivIndicationImage);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (UserViewHolder) convertView.getTag();

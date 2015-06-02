@@ -32,9 +32,9 @@ public class HomeTimelineFragment extends ListFragment
 
     public void customLoadMoreDataFromApi(int offset) {
         if (!adapter.isEmpty()) {
-            offlineHelper.populateTimeline(adapter.getItem(adapter.getCount() -1).getTid(), TweetOfflineHelper.TweetType.HOME);
+            offlineHelper.populateTimeline(null, adapter.getItem(adapter.getCount() -1).getTid(), TweetOfflineHelper.TweetType.HOME);
         }else{
-           offlineHelper.populateTimeline(offset, TweetOfflineHelper.TweetType.HOME);
+           offlineHelper.populateTimeline(null, offset, TweetOfflineHelper.TweetType.HOME);
         }
 
     }

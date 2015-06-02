@@ -29,6 +29,7 @@ public class UsersActivity extends ActionBarActivity {
     private ListView lvUsers;
     private UsersAdapter adapter;
     private TwitterClient client;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class UsersActivity extends ActionBarActivity {
         }
     }
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.action_bar_custom_layout);
         actionBar.setDisplayHomeAsUpEnabled(true);

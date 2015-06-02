@@ -21,7 +21,7 @@ public class TweetOfflineHelper extends JsonHttpResponseHandler {
     private TwitterClient client;
 
     public enum TweetType {
-        HOME, MENTIONS
+        HOME, MENTIONS, USER
     }
 
     public TweetOfflineHelper(TweetsArrayAdapter adapter, TweetResultsCallBack callBack) {
@@ -44,7 +44,9 @@ public class TweetOfflineHelper extends JsonHttpResponseHandler {
                 }
                 return null;
             }
+
         }.execute();
+
 
     }
 
@@ -58,8 +60,7 @@ public class TweetOfflineHelper extends JsonHttpResponseHandler {
         }.execute();
     }
 
-    public void populateTimeline(final long maxId, TweetType type) {
-
+    public void populateTimeline(final String screenName, final long maxId, TweetType type) {
         switch (type) {
             case HOME:
                 client.getHomeTimeline(maxId, new JsonHttpResponseHandler() {
@@ -87,17 +88,30 @@ public class TweetOfflineHelper extends JsonHttpResponseHandler {
                     }
                 });
                 break;
+            case USER:
+                client.getUserTimeline(screenName, maxId, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                        adapter.addAll(Tweet.fromJsonArray(response));
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Log.d("FAILURE", errorResponse.toString());
+                    }
+                });
+                break;
         }
     }
 
-    public void populateUserTimeline(final String screenName, final long maxId) {
-        client.getUserTimeline(screenName, maxId, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                adapter.addAll(Tweet.fromJsonArray(response));
-            }
-        });
-    }
+//    public void populateUserTimeline(final String screenName, final long maxId) {
+//        client.getUserTimeline(screenName, maxId, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                adapter.addAll(Tweet.fromJsonArray(response));
+//            }
+//        });
+//    }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
