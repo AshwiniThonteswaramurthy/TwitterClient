@@ -98,7 +98,7 @@ public class ListFragment extends Fragment implements TweetResultsCallBack {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 if (NetworkHelper.isNetworkAvailable((ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE))) {
-                    customLoadMoreDataFromApi(page);
+                    customLoadMoreDataFromApi(totalItemsCount);
                 } else {
                     Toast.makeText(getActivity(), "loading tweets offline...", Toast.LENGTH_LONG).show();
                     offlineHelper.loadTweetsOfflineMode();
@@ -108,8 +108,6 @@ public class ListFragment extends Fragment implements TweetResultsCallBack {
     }
 
     public void customLoadMoreDataFromApi(int offset) {
-        if (offset == 0)
-            adapter.clear();
         //This will be overridden in each implementation
     }
 

@@ -101,7 +101,6 @@ public class ComposeTweetDialog extends DialogFragment {
                 client.postTweet(tweetbody, inReplyToStatusId, mediaIds, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Log.d("POST_TWEET_ON_SUCCESS:", response.toString());
                         Tweet newTweet = Tweet.fromJson(response);
                         Intent data = new Intent();
                         data.putExtra("tweet", newTweet);

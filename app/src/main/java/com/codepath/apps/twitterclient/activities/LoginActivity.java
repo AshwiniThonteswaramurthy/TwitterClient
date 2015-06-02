@@ -41,7 +41,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> im
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         if(hasFocus){
-            zoomin = AnimationUtils.loadAnimation(this,R.anim.zoom_in);
+            zoomin = AnimationUtils.loadAnimation(this,R.anim.rotate);
             zoomin.setAnimationListener(this);
             zoomin.setRepeatCount(Animation.INFINITE);
             animatedView.startAnimation(zoomin);
