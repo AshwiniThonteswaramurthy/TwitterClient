@@ -2,8 +2,8 @@
 
 Time spent: **20** hours spent in total
 
-User Stories
---------
+Week 1: User Stories
+---------------------
 
 The following **required** functionality is completed:
 
@@ -39,17 +39,57 @@ The following **extra** features implemented:
 * [x] User can **select "favorite" from detail view that would favorite the tweet**
 * [x] User can **select "un-favorite" from detail view that would un-favorite the tweet**
 
+Week 2: User Stories
+--------------------
+The following **required** functionality is completed:
+
+* [x] The app includes **all required user stories** from Week 3 Twitter Client
+* [x] User can **switch between Timeline and Mention views using tabs**
+  * [x] User can view their home timeline tweets.
+  * [x] User can view the recent mentions of their username.
+* [x] User can navigate to **view their own profile**
+  * [x] User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+* [x] User can **click on the profile image** in any tweet to see **another user's** profile.
+ * [x] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+ * [x] Profile view includes that user's timeline
+* [x] User can [infinitely paginate](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews) any of these timelines (home, mentions, user) by scrolling to the bottom
+
+The following **optional** features are implemented:
+
+* [x] User can view following and followers list through the profile
+* [x] Implements robust error handling, [check if internet is available](http://guides.codepath.com/android/Sending-and-Managing-Network-Requests#checking-for-network-connectivity), handle error cases, network failures
+* [ ] When a network request is sent, user sees an [indeterminate progress indicator](http://guides.codepath.com/android/Handling-ProgressBars#progress-within-actionbar)
+* [x] User can **"reply" to any tweet on their home timeline**
+  * [x] The user that wrote the original tweet is automatically "@" replied in compose
+* [x] User can click on a tweet to be **taken to a "detail view"** of that tweet
+ * [x] User can take favorite (and unfavorite) or retweet actions on a tweet
+* [x] Improve the user interface and theme the app to feel twitter branded
+* [x] User can **search for tweets matching a particular query** and see results
+
+The following **bonus** features are implemented:
+
+* [ ] User can view their direct messages (or send new ones)
+
+
 Notes
 --------
 
 Describe any challenges encountered while building the app.
 
-Walkthrough of implemented user stories:
+Walkthrough of implemented user stories week 1:
 --------
 
 <img src='TwitterClient-1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
+Walkthrough of implemented user stories week 2:
+--------
+
+<img src='TwitterClient-2gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 
 Open-source libraries used
 --------
